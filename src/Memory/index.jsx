@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Grid } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, Grid } from "@mui/material";
 
 import Piece from "./Piece";
 import images from "./images";
@@ -62,28 +62,54 @@ const Memory = () => {
   }, [firstPiece, secondPiece, thirdPiece]);
 
 
+  // get number of pairs found
+  const nbFound = foundArray.reduce((acc, piece) => {
+    if (piece)
+      acc += 1
+    return acc
+  }, 0)
+
+  const [open, setOpen] = useState(true);
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    // grille de 4 lignes de 6 images
+    <>
 
-    <Grid container spacing={2}>
-      {pieces.map((numeroPiece, index) => (
-        <Grid key={index}>
-          <Piece 
-            piece={index}
-            numeroPiece={numeroPiece} 
-            firstPiece={firstPiece}
-            setFirstPiece={setFirstPiece}
-            secondPiece={secondPiece}
-            setSecondPiece={setSecondPiece}
-            thirdPiece={thirdPiece}
-            setThirdPiece={setThirdPiece}
-            hide={hide}
-            foundArray={foundArray}
-           />
-        </Grid>
-      ))}
-    </Grid>
+      {/* grille de 4 lignes de 6 images */}
 
+      <Grid container spacing={2}>
+        {pieces.map((numeroPiece, index) => (
+          <Grid key={index}>
+            <Piece 
+              piece={index}
+              numeroPiece={numeroPiece} 
+              firstPiece={firstPiece}
+              setFirstPiece={setFirstPiece}
+              secondPiece={secondPiece}
+              setSecondPiece={setSecondPiece}
+              thirdPiece={thirdPiece}
+              setThirdPiece={setThirdPiece}
+              hide={hide}
+              foundArray={foundArray}
+              />
+          </Grid>
+        ))}
+      </Grid>
+
+      {nbFound === totalCells / 2 &&
+        <Dialog
+          open={open}
+          onClose={handleClose}
+        >
+          <DialogContent>Victory !</DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Ok</Button>
+          </DialogActions>
+        </Dialog>
+      }
+    </>
   );
 };
 
