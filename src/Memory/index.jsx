@@ -1,98 +1,90 @@
-import { Grid } from '@mui/material'
+import { useEffect, useState } from "react";
+
+import { Grid } from "@mui/material";
+
+import Piece from "./Piece";
+import images from "./images";
 
 const Memory = () => {
 
+  //-------------- préparer toutes les cellules avec les différentes images (pas plus de 2)
+  const totalCells = 24;
+
+  const [alreadyUsed, setAlreadyUsed] = useState(Array(images.length).fill(0));
+
+  const [pieces] = useState(() => {
+    const piecesChosen = [];
+    const used = Array(images.length).fill(0);
+
+    while (piecesChosen.length < totalCells) {
+      const numero = Math.floor(Math.random() * images.length);
+      if (used[numero] < 2) {
+        piecesChosen.push(numero);
+        used[numero] += 1;
+      }
+    }
+
+    setAlreadyUsed(used);
+
+    return piecesChosen;
+  });
+
+
+  //--------------- si 2 retourner, le prochain clic les re retourne
+  const [foundArray, setFoundArray] = useState(Array(images.length).fill(false));
+
+  const [hide, setHide] = useState(false);
+
+  const [firstPiece, setFirstPiece] = useState(null)
+  const [secondPiece, setSecondPiece] = useState(null)
+  const [thirdPiece, setThirdPiece] = useState(null)
+
+
+   useEffect(() => {
+    if (firstPiece && secondPiece && thirdPiece) {
+
+      // cas pièces identiques
+      if (firstPiece.image === secondPiece.image) {
+        setFoundArray(prev => {
+          const newArray = [...prev];
+          newArray[firstPiece.image] = true;
+          return newArray;
+        });
+      }
+
+      setHide(true)
+      setFirstPiece(thirdPiece)
+      setSecondPiece(null)
+      setThirdPiece(null)
+    }
+    else
+      setHide(false)
+  }, [firstPiece, secondPiece, thirdPiece]);
+
+
   return (
-    <>
-      {/* ligne 1 */}
-      <Grid container spacing={2}>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
+    // grille de 4 lignes de 6 images
+
+    <Grid container spacing={2}>
+      {pieces.map((numeroPiece, index) => (
+        <Grid key={index}>
+          <Piece 
+            piece={index}
+            numeroPiece={numeroPiece} 
+            firstPiece={firstPiece}
+            setFirstPiece={setFirstPiece}
+            secondPiece={secondPiece}
+            setSecondPiece={setSecondPiece}
+            thirdPiece={thirdPiece}
+            setThirdPiece={setThirdPiece}
+            hide={hide}
+            foundArray={foundArray}
+           />
         </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-      </Grid>
-    
-      {/* ligne 2 */}
-      <Grid container spacing={2}>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-      </Grid>
-    
-      {/* ligne 3 */}
-      <Grid container spacing={2}>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-      </Grid>
-    
-      {/* ligne 4 */}
-      <Grid container spacing={2}>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-        <Grid size={2}>
-          <img src='syndra.jpg' width='200' />
-        </Grid>
-      </Grid>
-    </>
-  )
-}
+      ))}
+    </Grid>
+
+  );
+};
 
 export default Memory;
