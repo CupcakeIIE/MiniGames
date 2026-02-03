@@ -13,11 +13,12 @@ const Piece = ({
   hide = false,
   foundArray,
   imagesSelected = [],
+  namePiece = "",
  }) => {
 
   const classes = useStyles();
 
-  const namePiece = imagesSelected[numeroPiece];
+  // const namePiece = imagesSelected[numeroPiece];
 
   const [retournee, setRetournee] = useState(false);
   const clickPiece = () => {
@@ -48,7 +49,7 @@ const Piece = ({
   return (
     <Button className={classes.piece} onClick={clickPiece}>
       {retournee || foundArray[numeroPiece]
-        ? <img src={`Basic/${namePiece}.jpg`} width="200" />
+        ? <img src={`Memory/${namePiece}.jpg`} width="200" />
         : <img src={`fondRedimension.jpg`} width="200" />
       }
     </Button>

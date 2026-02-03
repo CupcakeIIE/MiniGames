@@ -7,16 +7,36 @@ import images from "./images";
 
 const Memory = () => {
 
+  // mode 0 => basic skin
+  // mode 1 => random skin differents
+  // mode 2 => match skin line
+  const mode = 0;
+
+  const names = Object.keys(images);
+
   //-------------- il y a plus que 12 champions dans la liste, il faut donc selectionner aléatoirement ceux qui seront en jeu
   // et recréer une nouvelle liste à partir de laquelle la suite sera effectuée
   const [imagesSelected] = useState(() => {
     const temp = [];
     while (temp.length < 12) {
-      const imageChosen = images[Math.floor(Math.random() * images.length)];
+      const imageChosen = names[Math.floor(Math.random() * names.length)];
       if (!temp.includes(imageChosen))
         temp.push(imageChosen)
     }
     return temp;
+  })
+
+  // if mode 1
+  // selection of the skins
+  const [skinsChosen, setSkinsChosen] = useState(() => {
+    const tempSkins = imagesSelected.reduce((acc, img) => {
+      const numeroSkin1 = Math.floor(Math.random() * images[img])
+      let numeroSkin2 = Math.floor(Math.random() * images[img]);
+      while (numeroSkin2 === numeroSkin1)
+        numeroSkin2 = Math.floor(Math.random() * images[img]);
+      return {...acc, [img]: {'0': numeroSkin1, '1': numeroSkin2}}
+    }, {})
+    return tempSkins
   })
 
   //-------------- préparer toutes les cellules avec les différentes images (pas plus de 2)
@@ -41,6 +61,27 @@ const Memory = () => {
     return piecesChosen;
   });
 
+
+  // mode 1 : choisir lequel des 2 skins va où
+  const [namePieces] = useState(() => {
+    const usedSkins = Array(imagesSelected.length).fill(-1);
+    const tempNames = pieces.reduce((acc, numPiece) => {
+      const name = imagesSelected[numPiece]
+      let finalNameImage = "";
+      if(usedSkins[numPiece] === 0)
+        finalNameImage = `${name}${skinsChosen[name][1]}`
+      else if (usedSkins[numPiece] === 1)
+        finalNameImage = `${name}${skinsChosen[name][0]}`
+      else {
+        const oneOrTwo = Math.floor(Math.random() * 2);
+        finalNameImage = `${name}${skinsChosen[name][oneOrTwo]}`
+        usedSkins[numPiece] = oneOrTwo
+      }
+      acc.push(finalNameImage)
+      return acc
+    }, [])
+    return tempNames
+  })
 
   //--------------- si 2 retourner, le prochain clic les re retourne
   const [foundArray, setFoundArray] = useState(Array(imagesSelected.length).fill(false));
@@ -106,6 +147,7 @@ const Memory = () => {
               hide={hide}
               foundArray={foundArray}
               imagesSelected={imagesSelected}
+              namePiece={namePieces[index]}
               />
           </Grid>
         ))}
