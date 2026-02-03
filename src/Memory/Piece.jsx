@@ -40,7 +40,7 @@ const Piece = ({
    useEffect(() => {
     if (hide) {
       setRetournee(false)
-      if (firstPiece.piece === piece)
+      if (firstPiece && firstPiece.piece === piece)
         setRetournee(true)
     }
   }, [hide]);

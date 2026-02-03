@@ -8,13 +8,12 @@ import MyAppBar from './AppBar'
 function App() {
 
   const [mode, setMode] = useState(0)
-
-  console.log('mode', mode)
+  const [startNewGame, setStartNewGame] = useState(true);
 
   return (
     <>
-      <MyAppBar setMode={setMode} />
-      <Memory />
+      <MyAppBar setMode={setMode} setStartNewGame={setStartNewGame} />
+      <Memory mode={mode} startNewGame={startNewGame} setStartNewGame={setStartNewGame} />
     </>
   )
 }

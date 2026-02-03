@@ -4,7 +4,7 @@ import { IconButton, Toolbar, Typography, AppBar, Drawer, ListItemText, List, Li
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-const MyAppBar = ({setMode}) => {
+const MyAppBar = ({setMode, setStartNewGame}) => {
   
   const [open, setOpen] = useState(false);
 
@@ -18,6 +18,7 @@ const MyAppBar = ({setMode}) => {
 
   const onClickListItemMode = (numero) => {
     setMode(numero)
+    setStartNewGame(true)
   }
 
   return (
