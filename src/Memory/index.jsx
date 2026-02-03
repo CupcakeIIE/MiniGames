@@ -7,17 +7,29 @@ import images from "./images";
 
 const Memory = () => {
 
+  //-------------- il y a plus que 12 champions dans la liste, il faut donc selectionner aléatoirement ceux qui seront en jeu
+  // et recréer une nouvelle liste à partir de laquelle la suite sera effectuée
+  const [imagesSelected] = useState(() => {
+    const temp = [];
+    while (temp.length < 12) {
+      const imageChosen = images[Math.floor(Math.random() * images.length)];
+      if (!temp.includes(imageChosen))
+        temp.push(imageChosen)
+    }
+    return temp;
+  })
+
   //-------------- préparer toutes les cellules avec les différentes images (pas plus de 2)
   const totalCells = 24;
 
-  const [alreadyUsed, setAlreadyUsed] = useState(Array(images.length).fill(0));
+  const [alreadyUsed, setAlreadyUsed] = useState(Array(imagesSelected.length).fill(0));
 
   const [pieces] = useState(() => {
     const piecesChosen = [];
-    const used = Array(images.length).fill(0);
+    const used = Array(imagesSelected.length).fill(0);
 
     while (piecesChosen.length < totalCells) {
-      const numero = Math.floor(Math.random() * images.length);
+      const numero = Math.floor(Math.random() * imagesSelected.length);
       if (used[numero] < 2) {
         piecesChosen.push(numero);
         used[numero] += 1;
@@ -31,7 +43,7 @@ const Memory = () => {
 
 
   //--------------- si 2 retourner, le prochain clic les re retourne
-  const [foundArray, setFoundArray] = useState(Array(images.length).fill(false));
+  const [foundArray, setFoundArray] = useState(Array(imagesSelected.length).fill(false));
 
   const [hide, setHide] = useState(false);
 
@@ -93,6 +105,7 @@ const Memory = () => {
               setThirdPiece={setThirdPiece}
               hide={hide}
               foundArray={foundArray}
+              imagesSelected={imagesSelected}
               />
           </Grid>
         ))}

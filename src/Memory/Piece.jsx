@@ -12,11 +12,12 @@ const Piece = ({
   thirdPiece, setThirdPiece, 
   hide = false,
   foundArray,
+  imagesSelected = [],
  }) => {
 
   const classes = useStyles();
 
-  const namePiece = images[numeroPiece];
+  const namePiece = imagesSelected[numeroPiece];
 
   const [retournee, setRetournee] = useState(false);
   const clickPiece = () => {
