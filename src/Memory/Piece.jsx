@@ -14,6 +14,7 @@ const Piece = ({
   foundArray,
   imagesSelected = [],
   namePiece = "",
+  finish = false,
  }) => {
 
   const classes = useStyles();
@@ -22,7 +23,7 @@ const Piece = ({
 
   const [retournee, setRetournee] = useState(false);
   const clickPiece = () => {
-    if (!retournee) {
+    if (!retournee && !finish) {
       if (!firstPiece) {
         setFirstPiece({piece: piece, image: numeroPiece})
         setRetournee(true)

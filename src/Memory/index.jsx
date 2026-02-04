@@ -5,6 +5,7 @@ import { Button, Dialog, DialogActions, DialogContent, Grid } from "@mui/materia
 import Piece from "./Piece";
 import images from "./images";
 import loadGame from "./Memory";
+import Compteur from "./Compteur";
 
 const Memory = ({mode = 0, startNewGame = true, setStartNewGame}) => {
 
@@ -101,6 +102,12 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame}) => {
   const [secondPiece, setSecondPiece] = useState(null)
   const [thirdPiece, setThirdPiece] = useState(null)
 
+  const [nbCoups, setNbCoups] = useState(0)
+
+  const [play, setPlay] = useState(false);
+  const [finish, setFinish] = useState(false);
+  const [time, setTime] = useState(0);
+
 
 
   useEffect(() => {
@@ -117,7 +124,10 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame}) => {
       setFirstPiece(null);
       setSecondPiece(null);
       setThirdPiece(null);
+      setNbCoups(0);
       setHide(true)
+      setFinish(false);
+      setTime(0)
     }
   }, [startNewGame, images, names, mode]);
 
@@ -125,6 +135,8 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame}) => {
   //--------------- si 2 retourner, le prochain clic les re retourne
 
    useEffect(() => {
+    if (firstPiece && !play && !finish)
+      setPlay(true)
     if (firstPiece && secondPiece && thirdPiece) {
 
       // cas pièces identiques
@@ -140,6 +152,7 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame}) => {
       setFirstPiece(thirdPiece)
       setSecondPiece(null)
       setThirdPiece(null)
+      setNbCoups(nbCoups + 1)
     }
     else
       setHide(false)
@@ -158,9 +171,17 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame}) => {
     setOpen(false);
   };
 
+  const handleBeginAgain = () => {
+    setOpen(false);
+    setStartNewGame(true);
+  };
+
   useEffect(() => {
-    if (nbFound === 12)
+    if (nbFound === 12) {
+      setPlay(false)
       setOpen(true)
+      setFinish(true)
+    }
   }, [nbFound])
 
   return (
@@ -184,19 +205,23 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame}) => {
               foundArray={foundArray}
               imagesSelected={imagesSelected}
               namePiece={namePieces[index]}
+              finish={finish}
               />
           </Grid>
         ))}
       </Grid>
+
+      <Compteur coups={nbCoups} play={play} time={time} setTime={setTime} />
 
       {nbFound === totalCells / 2 &&
         <Dialog
           open={open}
           onClose={handleClose}
         >
-          <DialogContent>Victory !</DialogContent>
+          <DialogContent style={{alignItems: 'center', justifyContent: 'center', display: 'flex'}}>Victory !</DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Ok</Button>
+            <Button onClick={handleBeginAgain}>Recommencer</Button>
+            <Button onClick={handleClose}>Fermer</Button>
           </DialogActions>
         </Dialog>
       }
