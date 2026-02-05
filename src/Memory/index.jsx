@@ -15,6 +15,7 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
 
   const imagesTheme = images[theme];
   console.log('images', imagesTheme)
+  console.log('mode/theme', theme, mode)
 
   const names = Object.keys(imagesTheme);
 

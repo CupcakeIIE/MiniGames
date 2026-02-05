@@ -53,6 +53,30 @@ const images = {
     'sirius': 1,
     'voldemort': 1,
     'weasley': 1,
+  },
+
+  skinLines: {
+    "arcana": 9,
+    "battleAcademia": 6,
+    "bewitching": 8,
+    "cafeCuties": 6,
+    "coven": 7,
+    "crimeCity": 3,
+    "darkStar": 6,
+    "dumplingDarling": 3,
+    "empyrean": 5,
+    "highNoon": 8,
+    "inkShadow": 6,
+    "lunarRevel": 7,
+    "mythmaker": 5,
+    "nightbringer": 4,
+    "odyssey": 5,
+    "project": 6,
+    "soulFighter": 5,
+    "spiritBlossom": 11,
+    "starGuardian": 10,
+    "streetDemons": 4,
+    "winterblessed": 9,
   }
 }
 

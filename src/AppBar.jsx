@@ -1,8 +1,23 @@
 import { useState } from "react";
 
-import { IconButton, Toolbar, Typography, AppBar, Drawer, ListItemText, List, ListItemButton, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Divider } from "@mui/material";
+import { 
+  IconButton, 
+  Toolbar, 
+  Typography, 
+  AppBar, 
+  Drawer, 
+  FormControl, 
+  FormLabel, 
+  RadioGroup, 
+  FormControlLabel, 
+  Radio, 
+  Divider 
+} from "@mui/material";
+
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
+
 import useStyles from "./style";
 
 const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme}) => {
@@ -21,8 +36,16 @@ const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme}) => {
 
   const handleChangeMode = (event) => {
     const value = Number(event.target.value)
-    setMode(value)
-    setStartNewGame(true)
+    if (value === 2)
+    {
+      setMode(1)
+      setStartNewGame(true)
+      setTheme('skinLines')
+    }
+    else {
+      setMode(value)
+      setStartNewGame(true)
+    }
   }
 
   const handleChangeTheme = (event) => {
@@ -90,7 +113,7 @@ const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme}) => {
           >
             <FormControlLabel value="0" control={<Radio />} label="Memory : Niveau 1" />
             <FormControlLabel disabled={theme==='potter'} value="1" control={<Radio />} label="Memory : Niveau 2" />
-            <FormControlLabel disabled value="2" control={<Radio />} label="Memory : Niveau 3" />
+            <FormControlLabel disabled={theme==='potter'} value="2" control={<Radio />} label="Memory : Niveau 3" />
             <FormControlLabel disabled value="4" control={<Radio />} label="Pendu" />
           </RadioGroup>
         </FormControl>
