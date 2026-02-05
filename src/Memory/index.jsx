@@ -125,7 +125,7 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
 
       {/* grille de 4 lignes de 6 images */}
 
-      <Grid container spacing={2}>
+      <Grid container spacing={2} style={{paddingTop: '5em'}}>
         {pieces.map((numeroPiece, index) => (
           <Grid key={index}>
             <Piece 
