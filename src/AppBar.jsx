@@ -5,7 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import useStyles from "./style";
 
-const MyAppBar = ({setMode, setStartNewGame}) => {
+const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme}) => {
 
   const classes = useStyles();
   
@@ -25,8 +25,10 @@ const MyAppBar = ({setMode, setStartNewGame}) => {
     setStartNewGame(true)
   }
 
-  const handleChangeTheme = () => {
-
+  const handleChangeTheme = (event) => {
+    setTheme(event.target.value)
+    setStartNewGame(true)
+    setMode(0)
   }
 
   return (
@@ -72,7 +74,7 @@ const MyAppBar = ({setMode, setStartNewGame}) => {
             onChange={handleChangeTheme}
           >
             <FormControlLabel value="lol" control={<Radio />} label="LoL" />
-            <FormControlLabel disabled value="potter" control={<Radio />} label="Harry Potter" />
+            <FormControlLabel value="potter" control={<Radio />} label="Harry Potter" />
           </RadioGroup>
         </FormControl>
 
@@ -87,7 +89,7 @@ const MyAppBar = ({setMode, setStartNewGame}) => {
             onChange={handleChangeMode}
           >
             <FormControlLabel value="0" control={<Radio />} label="Memory : Niveau 1" />
-            <FormControlLabel value="1" control={<Radio />} label="Memory : Niveau 2" />
+            <FormControlLabel disabled={theme==='potter'} value="1" control={<Radio />} label="Memory : Niveau 2" />
             <FormControlLabel disabled value="2" control={<Radio />} label="Memory : Niveau 3" />
             <FormControlLabel disabled value="4" control={<Radio />} label="Pendu" />
           </RadioGroup>

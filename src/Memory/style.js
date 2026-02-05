@@ -7,6 +7,7 @@ const useStyles = makeStyles(theme => ({
 
   // Compteur style
   paper: {
+    // position: 'sticky',
     position: 'absolute',
     bottom: '0px',
     left: '50%',

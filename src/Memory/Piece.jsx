@@ -3,8 +3,6 @@ import { Button } from "@mui/material";
 
 import useStyles from "./style";
 
-import images from "./images";
-
 const Piece = ({ 
   numeroPiece, piece,     // numeroPiece -> what image | piece -> which piece on the grid
   firstPiece, setFirstPiece, 
@@ -15,6 +13,7 @@ const Piece = ({
   imagesSelected = [],
   namePiece = "",
   finish = false,
+  theme = 'lol',
  }) => {
 
   const classes = useStyles();
@@ -50,8 +49,8 @@ const Piece = ({
   return (
     <Button className={classes.piece} onClick={clickPiece}>
       {retournee || foundArray[numeroPiece]
-        ? <img src={`Memory/${namePiece}.jpg`} width="200" />
-        : <img src={`fondRedimension.jpg`} width="200" />
+        ? <img src={`${theme}/${namePiece}.jpg`} width="200" />
+        : <img src={`${theme}/fondRedimension.jpg`} width="200" />
       }
     </Button>
   );
