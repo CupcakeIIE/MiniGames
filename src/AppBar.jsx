@@ -60,7 +60,6 @@ const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme}) => {
         <Toolbar>
           <IconButton
             color="inherit"
-            // onClick={handleDrawerOpen}
             edge="start"
             onClick={handleDrawerOpen}
             className={classes.menuButton}
@@ -114,7 +113,8 @@ const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme}) => {
             <FormControlLabel value="0" control={<Radio />} label="Memory : Niveau 1" />
             <FormControlLabel disabled={theme==='potter'} value="1" control={<Radio />} label="Memory : Niveau 2" />
             <FormControlLabel disabled={theme==='potter'} value="2" control={<Radio />} label="Memory : Niveau 3" />
-            <FormControlLabel disabled value="4" control={<Radio />} label="Pendu" />
+            <FormControlLabel value="4" control={<Radio />} label="Spider Memory" />
+            <FormControlLabel disabled value="5" control={<Radio />} label="Pendu" />
           </RadioGroup>
         </FormControl>
       </Drawer>

@@ -6,6 +6,7 @@ import Piece from "./Piece";
 import images from "./images";
 import loadGame from "./Memory";
 import Compteur from "./Compteur";
+import spiderMemory from "./SpiderMemory";
 
 const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'}) => {
 
@@ -14,8 +15,6 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
   // mode 2 => match skin line
 
   const imagesTheme = images[theme];
-  console.log('images', imagesTheme)
-  console.log('mode/theme', theme, mode)
 
   const names = Object.keys(imagesTheme);
 
@@ -26,6 +25,7 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
   const [namePieces, setNamePieces] = useState([]);
   const [pieces, setPieces] = useState([]);
   const [imagesSelected, setImagesSelected] = useState([]);
+  const [pioche, setPioche] = useState([]);
 
   
   const [foundArray, setFoundArray] = useState(Array(imagesSelected.length).fill(false));
@@ -47,11 +47,21 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
 
   useEffect(() => {
     if (startNewGame) {
-      const data = loadGame({ images: imagesTheme, names, mode });
+      let data;
 
-      setNamePieces(data.namePieces);
-      setPieces(data.pieces);
-      setImagesSelected(data.imagesSelected);
+      if (mode === 4) {
+        data = spiderMemory({ names });
+        setPioche(data);
+        setPieces(data.pioche.slice(0, 24));
+        setNamePieces(data.namePieces.slice(0, 24));
+      }
+      else {
+        data = loadGame({ images: imagesTheme, names, mode });
+
+        setNamePieces(data.namePieces);
+        setPieces(data.pieces);
+        setImagesSelected(data.imagesSelected);
+      }
 
       setStartNewGame(false);
 
@@ -75,6 +85,7 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
       setPlay(true)
     if (firstPiece && secondPiece && thirdPiece) {
 
+      console.log('1 et 2', firstPiece, secondPiece)
       // cas pièces identiques
       if (firstPiece.image === secondPiece.image) {
         setFoundArray(prev => {
@@ -120,14 +131,15 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
     }
   }, [nbFound])
 
+
   return (
     <>
 
       {/* grille de 4 lignes de 6 images */}
 
-      <Grid container spacing={2} style={{paddingTop: '5em'}}>
+      <Grid container spacing={2} style={{paddingTop: '5em', }}>
         {pieces.map((numeroPiece, index) => (
-          <Grid key={index}>
+          <Grid item key={index}>
             <Piece 
               piece={index}
               numeroPiece={numeroPiece} 
@@ -143,12 +155,13 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
               namePiece={namePieces[index]}
               finish={finish}
               theme={theme}
+              mode={mode}
               />
           </Grid>
         ))}
       </Grid>
 
-      <Compteur coups={nbCoups} play={play} time={time} setTime={setTime} />
+      <Compteur coups={nbCoups} play={play} time={time} setTime={setTime} mode={mode} />
 
       {nbFound === totalCells / 2 &&
         <Dialog

@@ -14,6 +14,7 @@ const Piece = ({
   namePiece = "",
   finish = false,
   theme = 'lol',
+  mode = 0,
  }) => {
 
   const classes = useStyles();
@@ -45,12 +46,15 @@ const Piece = ({
     }
   }, [hide]);
   
+  if (foundArray[numeroPiece] && mode === 4) {
+    return <div style={{ width: 200, height: 118 }} />;
+  }
 
   return (
     <Button className={classes.piece} onClick={clickPiece}>
       {retournee || foundArray[numeroPiece]
-        ? <img src={`${theme}/${namePiece}.jpg`} width="200" />
-        : <img src={`${theme}/fondRedimension.jpg`} width="200" />
+        ? <img src={`${theme}/${namePiece}.jpg`} width="200" /* className={classes.image} */ />
+        : <img src={`${theme}/fondRedimension.jpg`} width="200" /* className={classes.image} */ />
       }
     </Button>
   );
