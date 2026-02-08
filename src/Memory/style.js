@@ -3,8 +3,8 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles(theme => ({
   piece: {
     padding: '0px !important',
-    width: '15%',
-    height: '100%',
+    // width: '100%',
+    // height: '100%',
   },
 
   image: {
@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   piocheIcon: {
-    marginRight: '1em',
+    marginRight: '1em !important',
   }
 
 }));

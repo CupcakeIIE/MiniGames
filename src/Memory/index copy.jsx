@@ -18,15 +18,12 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
 
   const totalCells = 24;
 
-  const [maxPioche, setMaxPioche] = useState(mode === 4 ? Math.round(names.length / 12) : 1)
-  // console.log('maxPioche', maxPioche)
-
 
   const [imagePiecesArray, setImagePiecesArray] = useState([]);
   const [imageDisplayArray, setImageDisplayArray] = useState([]);
   const [numPieceArray, setNumPieceArray] = useState([])
 
-  const [foundArray, setFoundArray] = useState(Array(names.length).fill(false));
+  const [foundArray, setFoundArray] = useState(Array(imagePiecesArray.length).fill(false));
   
   // les pièces retournées
   const [firstPiece, setFirstPiece] = useState(null)
@@ -45,47 +42,37 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
 
   // quand clic sur la pioche (uniquement pour le spiderMemory)
   const [addEmpilement, setAddEmpilement] = useState(false)
-  const [numEmpilement, setNumEmpilement] = useState(0);
+  const [numEmpilement, setNumEmpilement] = useState(1);
 
 
-  if (addEmpilement && maxPioche > 0) {
+  if (addEmpilement) {
     // console.log('empilage')
-    const toAdd = imagePiecesArray.slice(24*(numEmpilement+1), 24*(numEmpilement+2))
-    // console.log(numEmpilement, toAdd)
+    const toAdd = imagePiecesArray.slice(24*numEmpilement, 24*(numEmpilement+1))
 
-    setImageDisplayArray(imageDisplayArray.map((pieceArray, index) => [
+    setImageDisplayArray(imagePiecesArray.map((pieceArray, index) => [
       ...pieceArray,
       toAdd[index]
     ] ))
 
     setNumEmpilement(numEmpilement + 1)
     setAddEmpilement(false)
-
-    setFirstPiece(null);
-    setSecondPiece(null);
-    setThirdPiece(null);
-    setMaxPioche(maxPioche - 1)
   }
 
 
   useEffect(() => {
     if (startNewGame) {
-      setMaxPioche(mode === 4 ? Math.round(names.length / 12) : 1)
-
       let data;
 
-      data = spiderMemory({ names, images: imagesTheme, pairsFinal: (mode === 4 ? Math.round(names.length / 12) : 1)*12, mode });
+      data = spiderMemory({ names, pairsFinal: (mode === 4 ? names.length : 12) });
       setImagePiecesArray(data.namePieces)
       
-      setNumPieceArray(data.pieces);
+      setNumPieceArray(data.pieces.slice(0, 24));
       setTotalPairs(data.pieces.length / 2)
-      console.log('total pairs', data.pieces.length / 2)
       
       const initializeEmpilement = data.namePieces.slice(0, 24).reduce((acc, piece) => {
         acc.push([piece])
         return acc
       }, [])
-      setMaxPioche((mode === 4 ? Math.round(names.length / 12) : 1) - 1)
 
       setImageDisplayArray(initializeEmpilement)
 
@@ -100,11 +87,9 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
       setFinish(false);
       setTime(0)
       setPlay(false)
-      setPairs(0)
     }
   }, [startNewGame, imagesTheme, names, mode]);
 
-  // console.log('images', imageDisplayArray)
 
   //--------------- si 2 retourner, le prochain clic les re retourne
 
@@ -115,22 +100,14 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
 
       // console.log('1 et 2', firstPiece, secondPiece)
       // cas pièces identiques
-      if ((firstPiece.image === secondPiece.image && mode !== 4) || (firstPiece.piece === secondPiece.piece && mode === 4)) {
+      if (firstPiece.image === secondPiece.image) {
         setFoundArray(prev => {
           const newArray = [...prev];
           newArray[firstPiece.image] = true;
           return newArray;
         });
         setPairs(pairs + 1)
-
-        // enlever la dernière image de l'empilement si mode = 4 (pour voir la pièce d'en dessous)
-        if (mode === 4) {
-          imageDisplayArray[firstPiece.index].pop();
-          imageDisplayArray[secondPiece.index].pop();
-        }
       }
-
-      console.log('images', imageDisplayArray)
 
       setFirstPiece(thirdPiece)
       setSecondPiece(null)
@@ -139,7 +116,6 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
     }
   }, [firstPiece, secondPiece, thirdPiece]);
 
-  // console.log('pairs', pairs, totalPairs)
 
   // get number of pairs found
   const nbFound = foundArray.reduce((acc, piece) => {
@@ -159,16 +135,14 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
   };
 
   useEffect(() => {
-    if (pairs === totalPairs) {
+    if (nbFound === 12) {
       setPlay(false)
       setOpen(true)
       setFinish(true)
     }
-  }, [pairs])
+  }, [nbFound])
 
-  // console.log('empilement', imageDisplayArray)
-
-  // console.log('found', foundArray)
+  // console.log('empilement', empilement)
 
   return (
     <>
@@ -203,10 +177,9 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
         pairs={pairs}
         totalPairs={totalPairs}
         setAddEmpilement={setAddEmpilement}
-        maxPioche={maxPioche}
       />
 
-      {pairs === totalPairs &&
+      {nbFound === totalCells / 2 &&
         <Dialog
           open={open}
           onClose={handleClose}
