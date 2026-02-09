@@ -8,7 +8,20 @@ import useStyles from "./style";
 import Timer from "./Timer";
 
 
-const Compteur = ({coups = 0, play = false, time = 0, setTime, mode = 0, pairs = 0, totalPairs = 0, setAddEmpilement, maxPioche = 0}) => {
+const Compteur = ({
+  coups = 0, 
+  play = false, 
+  time = 0, 
+  setTime, 
+  mode = 0, 
+  pairs = 0, 
+  totalPairs = 0, 
+  setAddEmpilement, 
+  maxPioche = 0,
+  diableSwapButton = true,
+  swapping = false,
+  setSwapping,
+}) => {
 
   const classes = useStyles();
 
@@ -19,7 +32,7 @@ const Compteur = ({coups = 0, play = false, time = 0, setTime, mode = 0, pairs =
           <IconButton className={classes.piocheIcon} disabled={maxPioche<=0} onClick={() => setAddEmpilement(true)}>
             <LibraryAddIcon />
           </IconButton>
-          <IconButton className={classes.piocheIcon}>
+          <IconButton variant={swapping && 'contained'} color={swapping ? 'primary' : 'inherit'} disabled={diableSwapButton} className={classes.piocheIcon} onClick={() => setSwapping(true)}>
             <AutorenewIcon />
           </IconButton>
         </>

@@ -47,6 +47,35 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
   const [addEmpilement, setAddEmpilement] = useState(false)
   const [numEmpilement, setNumEmpilement] = useState(0);
 
+  // mis à true quand imageDisplayArray n'a pas de liste vide
+  const [diableSwapButton, setDisableSwapButton] = useState(true)
+  const [swapping, setSwapping] = useState(false);
+  const [pieceToSwap, setPieceToSwap] = useState(null);
+
+
+  useEffect(() => {
+    if (swapping) {
+      // retourner toutes les cartes
+      setFirstPiece(null);
+      setSecondPiece(null);
+      setThirdPiece(null);
+
+      if (pieceToSwap) {
+        // enlever la pièce de l'empilement dont on veut la bouger
+        imageDisplayArray[pieceToSwap.index].pop();
+        // la rajouter dans le premier emplacement vide
+        const num = 0;
+        while (imageDisplayArray[num].length !== 0 && num !== pieceToSwap.index) {
+          num += 1;
+        }
+        imageDisplayArray[num].push(pieceToSwap.piece)
+
+        setSwapping(false);
+        setPieceToSwap(null);
+      }
+    }
+  }, [swapping, pieceToSwap])
+
 
   if (addEmpilement && maxPioche > 0) {
     // console.log('empilage')
@@ -65,6 +94,7 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
     setSecondPiece(null);
     setThirdPiece(null);
     setMaxPioche(maxPioche - 1)
+    setDisableSwapButton(true)
   }
 
 
@@ -79,7 +109,7 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
       
       setNumPieceArray(data.pieces);
       setTotalPairs(data.pieces.length / 2)
-      console.log('total pairs', data.pieces.length / 2)
+      // console.log('total pairs', data.pieces.length / 2)
       
       const initializeEmpilement = data.namePieces.slice(0, 24).reduce((acc, piece) => {
         acc.push([piece])
@@ -111,6 +141,13 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
    useEffect(() => {
     if (firstPiece && !play && !finish)
       setPlay(true)
+    if (firstPiece && secondPiece && pairs+1 === totalPairs) {
+      setPlay(false)
+      setOpen(true)
+      setFinish(true)
+      setNbCoups(nbCoups + 1)
+      setPairs(pairs + 1)
+    }
     if (firstPiece && secondPiece && thirdPiece) {
 
       // console.log('1 et 2', firstPiece, secondPiece)
@@ -130,7 +167,15 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
         }
       }
 
-      console.log('images', imageDisplayArray)
+      // console.log('images', imageDisplayArray)
+
+      // si un emplacement est vide on peut cliquer sur le swap button
+      const isEmpilementVide = imageDisplayArray.some(item => item.length === 0)
+      // console.log('isEVide', isEmpilementVide)
+      if (isEmpilementVide)
+        setDisableSwapButton(false)
+      else
+        setDisableSwapButton(true)
 
       setFirstPiece(thirdPiece)
       setSecondPiece(null)
@@ -140,13 +185,6 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
   }, [firstPiece, secondPiece, thirdPiece]);
 
   // console.log('pairs', pairs, totalPairs)
-
-  // get number of pairs found
-  const nbFound = foundArray.reduce((acc, piece) => {
-    if (piece)
-      acc += 1
-    return acc
-  }, 0)
 
   const [open, setOpen] = useState(true);
   const handleClose = () => {
@@ -158,13 +196,13 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
     setStartNewGame(true);
   };
 
-  useEffect(() => {
-    if (pairs === totalPairs) {
-      setPlay(false)
-      setOpen(true)
-      setFinish(true)
-    }
-  }, [pairs])
+  // useEffect(() => {
+  //   if (pairs === totalPairs && totalPairs !== 0) {
+  //     setPlay(false)
+  //     setOpen(true)
+  //     setFinish(true)
+  //   }
+  // }, [pairs])
 
   // console.log('empilement', imageDisplayArray)
 
@@ -189,6 +227,9 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
               theme={theme}
               mode={mode}
               pieceEmpileesArray={piecesEmpileesArray}
+              swapping={swapping}
+              setPieceToSwap={setPieceToSwap}
+              finish={finish}
               />
           </Grid>
         ))}
@@ -204,9 +245,12 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
         totalPairs={totalPairs}
         setAddEmpilement={setAddEmpilement}
         maxPioche={maxPioche}
+        diableSwapButton={diableSwapButton}
+        swapping={swapping}
+        setSwapping={setSwapping}
       />
 
-      {pairs === totalPairs &&
+      {finish &&
         <Dialog
           open={open}
           onClose={handleClose}

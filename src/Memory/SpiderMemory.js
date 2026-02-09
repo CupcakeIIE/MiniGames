@@ -87,8 +87,8 @@ const spiderMemory = ({names = [], images = {}, pairsFinal = 0, mode = 0}) => {
   //   return acc
   // }, [])
 
-  console.log('pieces', namePieces)
-  console.log('pieces', pieces)
+  // console.log('pieces', namePieces)
+  // console.log('pieces', pieces)
 
   return {pieces: pieces.slice(0, pairsFinal*2), namePieces: namePieces.slice(0, pairsFinal*2)};
 }

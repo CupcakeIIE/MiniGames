@@ -16,6 +16,9 @@ const Piece = ({
   theme = 'lol',
   mode = 0,
   pieceEmpileesArray = [],
+  swapping = false,
+  setPieceToSwap,
+  finish = false,
  }) => {
 
   const classes = useStyles();
@@ -33,30 +36,28 @@ const Piece = ({
 
 
   const clickPiece = () => {
-    // console.log('num', numPiece, imagePiece)
-    if (!retournee/*  && !finish */) {
-      if (!firstPiece) {
-        setFirstPiece({piece: imagePiece, image: numPiece, index: index})
-        setRetournee(true)
-      }
-      else if (firstPiece && !secondPiece) {
-        setSecondPiece({piece: imagePiece, image: numPiece, index: index})
-        setRetournee(true)
-      }
-      else if (firstPiece && secondPiece) {
-        setThirdPiece({piece: imagePiece, image: numPiece, index: index})
-      }
+    if (finish)
+      return
+    if (swapping) {
+      setPieceToSwap({piece: imagePiece, image: numPiece, index: index})
     }
-    // console.log('fst', firstPiece, secondPiece, thirdPiece, imagePiece, index)
-  }
 
-   /* useEffect(() => {
-    if (hide) {
-      setRetournee(false)
-      if (firstPiece && firstPiece.piece === piece)
-        setRetournee(true)
+    else {
+      if (!retournee && !(foundArray[numPiece] && mode !== 4)) {
+        if (!firstPiece) {
+          setFirstPiece({piece: imagePiece, image: numPiece, index: index})
+          setRetournee(true)
+        }
+        else if (firstPiece && !secondPiece) {
+          setSecondPiece({piece: imagePiece, image: numPiece, index: index})
+          setRetournee(true)
+        }
+        else if (firstPiece && secondPiece) {
+          setThirdPiece({piece: imagePiece, image: numPiece, index: index})
+        }
+      }
     }
-  }, [hide]); */
+  }
 
 
   useEffect(() => {
@@ -74,10 +75,13 @@ const Piece = ({
   // console.log(foundArray)
 
   return (
-    <Button className={classes.piece} onClick={clickPiece}>
+    <Button 
+      className={(firstPiece?.index === index || secondPiece?.index === index) ? classes.pieceBordure : classes.piece} 
+      onClick={clickPiece}
+    >
       {retournee || (foundArray[numPiece] && mode !== 4)
-        ? <img src={`${theme}/${imagePiece}.jpg`} width="200" /* className={classes.image} */ />
-        : <img src={`${theme}/fondRedimension.jpg`} width="200" /* className={classes.image} */ />
+        ? <img src={`${theme}/${imagePiece}.jpg`} /* width="200" */ className={classes.image} />
+        : <img src={`${theme}/fondRedimension.jpg`} /* width="200" */ className={classes.image} />
       }
     </Button>
   );

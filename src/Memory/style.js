@@ -2,13 +2,21 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles(theme => ({
   piece: {
-    padding: '0px !important',
-    // width: '100%',
-    // height: '100%',
+    width: '200px',
+    height: '120px',
+    padding: '0 !important',
+    border: '5px solid transparent !important'
+  },
+
+  pieceBordure: {
+    width: '200px',
+    height: '120px',
+    padding: '0 !important',
+    border: '5px solid #0022ff !important'
   },
 
   image: {
-    objectFit: 'contain',
+    objectFit: 'cover',
     width: '100%',
     height: '100%',
     display: 'block',
