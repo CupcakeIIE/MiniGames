@@ -55,6 +55,17 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
 
   useEffect(() => {
     if (swapping) {
+      
+      // regarder si les paires sont identiques
+      if (firstPiece && secondPiece) {
+        setNbCoups(nbCoups + 1)
+        if (firstPiece.piece === secondPiece.piece) {
+          setPairs(pairs + 1)
+          imageDisplayArray[firstPiece.index].pop();
+          imageDisplayArray[secondPiece.index].pop();
+        }
+      }
+
       // retourner toutes les cartes
       setFirstPiece(null);
       setSecondPiece(null);
@@ -81,6 +92,17 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
 
 
   if (addEmpilement && maxPioche > 0) {
+    
+    // si on clique sur la pioche alors qu'on vient de trouver une paire, on l'enlève
+    if (firstPiece && secondPiece) {
+      setNbCoups(nbCoups + 1)
+      if (firstPiece.piece === secondPiece.piece) {
+        setPairs(pairs + 1)
+        imageDisplayArray[firstPiece.index].pop();
+        imageDisplayArray[secondPiece.index].pop();
+      }
+    }
+
     // console.log('empilage')
     const toAdd = imagePiecesArray.slice(24*(numEmpilement+1), 24*(numEmpilement+2))
     // console.log(numEmpilement, toAdd)
@@ -92,12 +114,6 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
 
     setNumEmpilement(numEmpilement + 1)
     setAddEmpilement(false)
-
-    if (firstPiece && secondPiece) {
-      setNbCoups(nbCoups + 1)
-      if (firstPiece.piece === secondPiece.piece)
-        setPairs(pairs + 1)
-    }
 
     setFirstPiece(null);
     setSecondPiece(null);
