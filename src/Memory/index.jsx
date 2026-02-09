@@ -64,7 +64,7 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
         // enlever la pièce de l'empilement dont on veut la bouger
         imageDisplayArray[pieceToSwap.index].pop();
         // la rajouter dans le premier emplacement vide
-        const num = 0;
+        let num = 0;
         while (imageDisplayArray[num].length !== 0 && num !== pieceToSwap.index) {
           num += 1;
         }
