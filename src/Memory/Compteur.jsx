@@ -32,7 +32,7 @@ const Compteur = ({
           <IconButton className={classes.piocheIcon} disabled={maxPioche<=0} onClick={() => setAddEmpilement(true)}>
             <LibraryAddIcon />
           </IconButton>
-          <IconButton variant={swapping && 'contained'} color={swapping ? 'primary' : 'inherit'} disabled={diableSwapButton} className={classes.piocheIcon} onClick={() => setSwapping(true)}>
+          <IconButton color={swapping ? 'primary' : 'inherit'} disabled={diableSwapButton} className={classes.piocheIcon} onClick={() => setSwapping(true)}>
             <AutorenewIcon />
           </IconButton>
         </>
