@@ -147,6 +147,8 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
       setFinish(true)
       setNbCoups(nbCoups + 1)
       setPairs(pairs + 1)
+      // setFirstPiece(null)
+      // setSecondPiece(null)
     }
     if (firstPiece && secondPiece && thirdPiece) {
 

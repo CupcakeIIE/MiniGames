@@ -2,17 +2,35 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles(theme => ({
   piece: {
-    width: '200px',
-    height: '120px',
+    width: '180px',
+    height: '110px',
     padding: '0 !important',
-    border: '5px solid transparent !important'
+    // border: '5px solid transparent !important',
+    position: 'absolute !important',
+  },
+
+  cell: {
+    width: '180px',
+    height: '110px',
+    padding: '0 !important',
+    border: '5px solid transparent !important',
+    position: 'relative !important',
+  },
+
+  cellBordure: {
+    width: '180px',
+    height: '110px',
+    padding: '0 !important',
+    border: '5px solid #0022ff !important',
+    position: 'relative !important',
   },
 
   pieceBordure: {
-    width: '200px',
-    height: '120px',
+    width: '180px',
+    height: '110px',
     padding: '0 !important',
-    border: '5px solid #0022ff !important'
+    border: '5px solid #0022ff !important',
+    position: 'absolute !important',
   },
 
   image: {
