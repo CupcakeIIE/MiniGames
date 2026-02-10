@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: '100%',
     display: 'block',
+    border: '1px solid #000000 !important'
   },
 
   // Compteur style
