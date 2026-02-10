@@ -156,6 +156,7 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
       setTime(0)
       setPlay(false)
       setPairs(0)
+      setNumEmpilement(0)
     }
   }, [startNewGame, imagesTheme, names, mode]);
 
