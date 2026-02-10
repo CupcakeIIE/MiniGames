@@ -45,7 +45,8 @@ const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme}) => {
     else {
       setMode(value)
       setStartNewGame(true)
-      setTheme('lol')
+      if (theme === 'skinKines')
+        setTheme('lol')
     }
   }
 

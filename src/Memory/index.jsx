@@ -160,7 +160,7 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
     }
   }, [startNewGame, imagesTheme, names, mode]);
 
-  // console.log('images', imageDisplayArray)
+  console.log('images', imageDisplayArray)
 
   //--------------- si 2 retourner, le prochain clic les re retourne
 
