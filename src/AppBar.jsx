@@ -20,7 +20,7 @@ import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
 
 import useStyles from "./style";
 
-const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme}) => {
+const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme, setGame}) => {
 
   const classes = useStyles();
   
@@ -36,17 +36,24 @@ const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme}) => {
 
   const handleChangeMode = (event) => {
     const value = Number(event.target.value)
-    if (value === 2)
-    {
-      setMode(1)
+    if (value === 5) {
+      setGame('pendu')
       setStartNewGame(true)
-      setTheme('skinLines')
     }
     else {
-      setMode(value)
-      setStartNewGame(true)
-      if (theme === 'skinKines')
-        setTheme('lol')
+      setGame("memory")
+      if (value === 2)
+      {
+        setMode(1)
+        setStartNewGame(true)
+        setTheme('skinLines')
+      }
+      else {
+        setMode(value)
+        setStartNewGame(true)
+        if (theme === 'skinKines')
+          setTheme('lol')
+      }
     }
   }
 
@@ -116,7 +123,7 @@ const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme}) => {
             <FormControlLabel disabled={theme==='potter'} value="1" control={<Radio />} label="Memory : Niveau 2" />
             <FormControlLabel disabled={theme==='potter'} value="2" control={<Radio />} label="Memory : Niveau 3" />
             <FormControlLabel value="4" control={<Radio />} label="Spider Memory" />
-            <FormControlLabel disabled value="5" control={<Radio />} label="Pendu" />
+            <FormControlLabel value="5" control={<Radio />} label="Pendu" />
           </RadioGroup>
         </FormControl>
       </Drawer>
