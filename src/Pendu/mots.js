@@ -13,7 +13,25 @@ const mots = {
     'detraqueur',
     'araignee',
     'patronus',
-    
+    'serpentard',
+    'serdaigle',
+    'gryffondor',
+    'poufsouffle',
+    'mcgonagall',
+    'durmstrang',
+    'beauxbatons',
+    'maraudeur',
+    'preaulard',
+    'baguette',
+    'expelliarmus',
+    'stupefix',
+    'endoloris',
+    'accio',
+    'alohomora',
+    'gringotts',
+    'phoenix',
+    'basilic',
+    'hipogriffe',    
   ],
 
   'lol': [
@@ -26,7 +44,10 @@ const mots = {
     'sona',
     'creaps',
     'canon',
-
+    'ksante',
+    'yunara',
+    'milio',
+    'syndra',
   ],
 }
 
