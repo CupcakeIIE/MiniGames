@@ -8,9 +8,9 @@ import loadGame from "./Memory";
 import Compteur from "./Compteur";
 import spiderMemory from "./SpiderMemory";
 
-const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'}) => {
+const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol', setOpenInfos}) => {
 
-  const imagesTheme = images[theme];
+  const imagesTheme = images[(mode === 2 ? 'skinLines' : theme)];
 
   // ['ahri', 'aphelios', ...]
   const names = Object.keys(imagesTheme);
@@ -276,6 +276,7 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol'})
         diableSwapButton={diableSwapButton}
         swapping={swapping}
         setSwapping={setSwapping}
+        setOpenInfos={setOpenInfos}
       />
 
       {finish &&

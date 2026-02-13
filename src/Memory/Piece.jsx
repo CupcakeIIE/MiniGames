@@ -104,8 +104,8 @@ const Piece = ({
             <img
               src={
                 (retournee || (foundArray[numPiece] && mode !== 4)) && isLast
-                  ? `${theme}/${imagePiece}.jpg`
-                  : `${theme}/fondRedimension.jpg`
+                  ? `${theme === 'lol' && mode === 2 ? 'skinLines' : theme}/${imagePiece}.jpg`
+                  : `${theme === 'lol' && mode === 2 ? 'skinLines' : theme}/fondRedimension.jpg`
               }
               className={classes.image}
             />

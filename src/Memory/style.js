@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   infoIcon: {
-    marginLeft: '1em',
+    marginLeft: '1em !important',
   },
 
   piocheIcon: {

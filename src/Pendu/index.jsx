@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
-import { Grid, Button, Dialog, DialogContent, DialogActions } from "@mui/material";
+import { Grid, Button, Dialog, DialogContent, DialogActions, IconButton } from "@mui/material";
+import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
 
 import loadPendu from "./pendu"
 
-const Pendu = ({ startNewGame = true, setStartNewGame, theme = 'potter'}) => {
+const Pendu = ({ startNewGame = true, setStartNewGame, theme = 'potter', setOpenInfos}) => {
 
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -98,6 +99,12 @@ const Pendu = ({ startNewGame = true, setStartNewGame, theme = 'potter'}) => {
             <Button variant='contained' disabled={touches[touche]} onClick={() => clickLetter(touche)}>{touche}</Button>
           </Grid>
         ))}
+        
+        <Grid size={1}>
+          <IconButton onClick={() => setOpenInfos(true)}>
+            <InfoOutlineIcon /* className={classes.infoIcon} */ />
+          </IconButton>
+        </Grid>
       </Grid>
 
       

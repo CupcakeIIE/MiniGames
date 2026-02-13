@@ -21,6 +21,7 @@ const Compteur = ({
   diableSwapButton = true,
   swapping = false,
   setSwapping,
+  setOpenInfos,
 }) => {
 
   const classes = useStyles();
@@ -44,7 +45,9 @@ const Compteur = ({
         <Divider orientation="vertical" flexItem />
         <Typography className={classes.nbCoups}>{coups} {coups > 1 ? 'coups' : 'coup'}</Typography>
       </Paper>
-      <InfoOutlineIcon className={classes.infoIcon} />
+      <IconButton className={classes.infoIcon} onClick={() => setOpenInfos(true)}>
+        <InfoOutlineIcon />
+      </IconButton>
     </div>
   )
 }

@@ -10,6 +10,7 @@ const spiderMemory = ({names = [], images = {}, pairsFinal = 0, mode = 0}) => {
 
 
   // console.log('nbPairs', pairsFinal)
+  // console.log('images', images, names)
 
   const pieces = [];
   const used = Array(pairsFinal).fill(0);
@@ -45,7 +46,7 @@ const spiderMemory = ({names = [], images = {}, pairsFinal = 0, mode = 0}) => {
     }
 
     // pour le niveau 2 => 2 skins différents = choisir les skins
-    if (mode === 1) {
+    if (mode === 1 || mode === 2) {
       skinsChosen = numberSelected.reduce((acc, num) => {
         const numeroSkin1 = Math.floor(Math.random() * images[names[num]])
         let numeroSkin2 = Math.floor(Math.random() * images[names[num]]);
@@ -63,7 +64,7 @@ const spiderMemory = ({names = [], images = {}, pairsFinal = 0, mode = 0}) => {
   const namePieces = pieces.reduce((acc, numPiece) => {
     const name = names[numPiece]
     let finalNameImage = "";
-    if (mode === 1) {
+    if (mode === 1 || mode === 2) {
       if(usedSkins[numPiece] === 0)
         finalNameImage = `${name}${skinsChosen[name][1]}`
       else if (usedSkins[numPiece] === 1)

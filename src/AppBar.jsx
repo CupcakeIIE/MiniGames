@@ -44,14 +44,14 @@ const MyAppBar = ({mode, setMode, setStartNewGame, theme = 'lol', setTheme, setG
       setGame("memory")
       if (value === 2)
       {
-        setMode(1)
+        setMode(value)
         setStartNewGame(true)
-        setTheme('skinLines')
+        setTheme('lol')
       }
       else {
         setMode(value)
         setStartNewGame(true)
-        if (theme === 'skinKines')
+        if (theme === 'skinLines')
           setTheme('lol')
       }
     }
@@ -84,6 +84,11 @@ const MyAppBar = ({mode, setMode, setStartNewGame, theme = 'lol', setTheme, setG
         anchor="left"
         open={open}
         onClose={handleDrawerClose}
+        PaperProps={{
+          sx: {
+            width: 220,
+          }
+        }}
       >
         <div className={classes.divButtonClose}>
           <IconButton 
@@ -119,9 +124,9 @@ const MyAppBar = ({mode, setMode, setStartNewGame, theme = 'lol', setTheme, setG
             name="game"
             onChange={handleChangeMode}
           >
-            <FormControlLabel value="0" control={<Radio />} label="Memory : Niveau 1" />
-            <FormControlLabel disabled={theme==='potter'} value="1" control={<Radio />} label="Memory : Niveau 2" />
-            <FormControlLabel disabled={theme==='potter'} value="2" control={<Radio />} label="Memory : Niveau 3" />
+            <FormControlLabel value="0" control={<Radio />} label={`Memory${(theme !== 'potter' && theme !== '') ? ' : Niveau 1' : ''}`} />
+            {theme !== 'potter' && theme !== '' && <FormControlLabel value="1" control={<Radio />} label="Memory : Niveau 2" />}
+            {theme !== 'potter' && theme !== '' && <FormControlLabel value="2" control={<Radio />} label="Memory : Niveau 3" />}
             <FormControlLabel value="4" control={<Radio />} label="Spider Memory" />
             <FormControlLabel value="5" control={<Radio />} label="Pendu" />
           </RadioGroup>

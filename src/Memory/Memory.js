@@ -12,7 +12,7 @@ const loadGame = ({images = {}, names = [], mode = 0}) => {
 
   // 2 - choose skins
   let skinsChosen = {};
-  if (mode === 1) {
+  if (mode === 1 || mode === 2) {
     skinsChosen = imagesSelected.reduce((acc, img) => {
       const numeroSkin1 = Math.floor(Math.random() * images[img])
       let numeroSkin2 = Math.floor(Math.random() * images[img]);
@@ -39,7 +39,7 @@ const loadGame = ({images = {}, names = [], mode = 0}) => {
   const namePieces = pieces.reduce((acc, numPiece) => {
     const name = imagesSelected[numPiece]
     let finalNameImage = "";
-    if (mode === 1) {
+    if (mode === 1 || mode === 2) {
       if(usedSkins[numPiece] === 0)
         finalNameImage = `${name}${skinsChosen[name][1]}`
       else if (usedSkins[numPiece] === 1)
