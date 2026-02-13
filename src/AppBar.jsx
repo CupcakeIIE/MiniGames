@@ -20,7 +20,7 @@ import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
 
 import useStyles from "./style";
 
-const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme, setGame}) => {
+const MyAppBar = ({mode, setMode, setStartNewGame, theme = 'lol', setTheme, setGame}) => {
 
   const classes = useStyles();
   
@@ -81,9 +81,9 @@ const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme, setGame}) 
         </Toolbar>
       </AppBar>
       <Drawer
-        variant="persistent"
         anchor="left"
         open={open}
+        onClose={handleDrawerClose}
       >
         <div className={classes.divButtonClose}>
           <IconButton 
@@ -100,7 +100,7 @@ const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme, setGame}) 
         <FormControl className={classes.formControl}>
           <FormLabel className={classes.formTitle}>Thème</FormLabel>
           <RadioGroup
-            defaultValue="lol"
+            defaultValue={theme}
             name="theme"
             onChange={handleChangeTheme}
           >
@@ -115,7 +115,7 @@ const MyAppBar = ({setMode, setStartNewGame, theme = 'lol', setTheme, setGame}) 
         <FormControl className={classes.formControl}>
           <FormLabel className={classes.formTitle}>Jeux</FormLabel>
           <RadioGroup
-            defaultValue="0"
+            defaultValue={mode}
             name="game"
             onChange={handleChangeMode}
           >

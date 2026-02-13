@@ -4,21 +4,28 @@ import './App.css'
 import Memory from './Memory'
 import MyAppBar from './AppBar'
 import Pendu from './Pendu'
+import Welcome from './Welcome'
 
 function App() {
 
-  const [mode, setMode] = useState(0)
-  const [theme, setTheme] = useState('lol')
+  const [mode, setMode] = useState('')
+  const [theme, setTheme] = useState('')
   const [startNewGame, setStartNewGame] = useState(true);
-  const [game, setGame] = useState('memory')
+  const [game, setGame] = useState('')
 
   return (
     <>
-      <MyAppBar setMode={setMode} setStartNewGame={setStartNewGame} theme={theme} setTheme={setTheme} setGame={setGame} />
-      {game === 'memory'
-        ? <Memory mode={mode} startNewGame={startNewGame} setStartNewGame={setStartNewGame} theme={theme} />
-        : <Pendu startNewGame={startNewGame} setStartNewGame={setStartNewGame} theme={theme} />
+      <MyAppBar mode={mode} setMode={setMode} setStartNewGame={setStartNewGame} theme={theme} setTheme={setTheme} setGame={setGame} />
+      {theme === "" || game === ""
+       ? <Welcome />
+       : <>
+          {game === 'memory'
+            ? <Memory mode={mode} startNewGame={startNewGame} setStartNewGame={setStartNewGame} theme={theme} />
+            : <Pendu startNewGame={startNewGame} setStartNewGame={setStartNewGame} theme={theme} />
+          }
+        </>
       }
+      
     </>
   )
 }
