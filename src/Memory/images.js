@@ -100,6 +100,36 @@ const images = {
     "starGuardian": 10,
     "streetDemons": 4,
     "winterblessed": 9,
+  },
+
+  italien: {
+    'beige': 2,
+    'blanc': 2,
+    'bleu': 2,
+    'gris': 2,
+    'jaune': 2,
+    'marron': 2,
+    'noir': 2,
+    'orange': 2,
+    'rose': 2,
+    'rouge': 2,
+    'vert': 2,
+    'violet': 2,
+  },
+
+  finnois: {
+    'beige': 2,
+    'blanc': 2,
+    'bleu': 2,
+    'gris': 2,
+    'jaune': 2,
+    'marron': 2,
+    'noir': 2,
+    'orange': 2,
+    'rose': 2,
+    'rouge': 2,
+    'vert': 2,
+    'violet': 2,
   }
 }
 

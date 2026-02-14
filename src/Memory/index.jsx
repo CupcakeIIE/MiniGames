@@ -129,7 +129,7 @@ const Memory = ({mode = 0, startNewGame = true, setStartNewGame, theme = 'lol', 
 
       let data;
 
-      data = spiderMemory({ names, images: imagesTheme, pairsFinal: (mode === 4 ? Math.round(names.length / 12) : 1)*12, mode });
+      data = spiderMemory({ theme, names, images: imagesTheme, pairsFinal: (mode === 4 ? Math.round(names.length / 12) : 1)*12, mode });
       setImagePiecesArray(data.namePieces)
       
       setNumPieceArray(data.pieces);

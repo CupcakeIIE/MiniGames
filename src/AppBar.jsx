@@ -111,6 +111,8 @@ const MyAppBar = ({mode, setMode, setStartNewGame, theme = 'lol', setTheme, setG
           >
             <FormControlLabel value="lol" control={<Radio />} label="LoL" />
             <FormControlLabel value="potter" control={<Radio />} label="Harry Potter" />
+            <FormControlLabel value="finnois" control={<Radio />} label="Finnois" />
+            <FormControlLabel value="italien" control={<Radio />} label="Italien" />
           </RadioGroup>
         </FormControl>
 
@@ -124,11 +126,11 @@ const MyAppBar = ({mode, setMode, setStartNewGame, theme = 'lol', setTheme, setG
             name="game"
             onChange={handleChangeMode}
           >
-            <FormControlLabel value="0" control={<Radio />} label={`Memory${(theme !== 'potter' && theme !== '') ? ' : Niveau 1' : ''}`} />
-            {theme !== 'potter' && theme !== '' && <FormControlLabel value="1" control={<Radio />} label="Memory : Niveau 2" />}
-            {theme !== 'potter' && theme !== '' && <FormControlLabel value="2" control={<Radio />} label="Memory : Niveau 3" />}
-            <FormControlLabel value="4" control={<Radio />} label="Spider Memory" />
-            <FormControlLabel value="5" control={<Radio />} label="Pendu" />
+            <FormControlLabel value="0" control={<Radio />} label={`Memory${(theme === 'lol') ? ' : Niveau 1' : ''}`} />
+            {theme === 'lol' && <FormControlLabel value="1" control={<Radio />} label="Memory : Niveau 2" />}
+            {theme === 'lol' && <FormControlLabel value="2" control={<Radio />} label="Memory : Niveau 3" />}
+            {theme !== 'italien' && theme !== 'finnois' && <FormControlLabel value="4" control={<Radio />} label="Spider Memory" />}
+            {theme !== 'italien' && theme !== 'finnois' && <FormControlLabel value="5" control={<Radio />} label="Pendu" />}
           </RadioGroup>
         </FormControl>
       </Drawer>
